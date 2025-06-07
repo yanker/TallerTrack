@@ -36,12 +36,14 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
 ### Registro y acceso
 
 1. **Registro de nueva cuenta**:
+
    - Accede a la página principal de TallerTracker
    - Haz clic en "Registrarse"
    - Completa el formulario con tu correo electrónico y contraseña
    - Haz clic en "Crear cuenta"
 
 2. **Inicio de sesión**:
+
    - Introduce tu correo electrónico y contraseña en la pantalla de login
    - Haz clic en "Iniciar sesión"
    - Serás redirigido automáticamente al Dashboard
@@ -53,6 +55,7 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
 ### Gestión de vehículos
 
 1. **Añadir un nuevo vehículo**:
+
    - Navega a la sección "Vehículos" en el menú lateral
    - Haz clic en el botón "+ Agregar"
    - Completa el formulario con los datos del vehículo:
@@ -64,6 +67,7 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
    - Haz clic en "Guardar"
 
 2. **Editar un vehículo existente**:
+
    - En la lista de vehículos, haz clic en el icono de lápiz (✏️) junto al vehículo que deseas editar
    - Modifica los campos necesarios
    - Haz clic en "Actualizar"
@@ -76,6 +80,7 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
 ### Registros de mantenimiento
 
 1. **Añadir un nuevo registro de mantenimiento**:
+
    - Navega a la sección "Mantenimientos" en el menú lateral
    - Haz clic en el botón "+ Agregar"
    - Selecciona el vehículo al que deseas añadir el mantenimiento
@@ -87,6 +92,7 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
    - Haz clic en "Crear"
 
 2. **Buscar y filtrar mantenimientos**:
+
    - Utiliza el campo de búsqueda para encontrar mantenimientos por descripción
    - Usa el selector de vehículo para filtrar mantenimientos por vehículo específico
    - Los resultados se actualizan automáticamente mientras escribes
@@ -99,6 +105,7 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
 ### Mantenimiento programado
 
 1. **Programar un nuevo mantenimiento**:
+
    - Navega a la sección "Mnto Programado" en el menú lateral
    - Haz clic en el botón "+ Programar Mantenimiento"
    - Selecciona el vehículo
@@ -110,6 +117,7 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
    - Haz clic en "Crear"
 
 2. **Gestionar mantenimientos programados**:
+
    - Los mantenimientos programados aparecen en una lista ordenada
    - Puedes filtrarlos por vehículo o buscar por descripción
    - Para editar o desactivar un mantenimiento, haz clic en el icono de lápiz (✏️)
@@ -127,16 +135,19 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
 El Dashboard es la pantalla principal de la aplicación y ofrece una visión general de:
 
 1. **Estadísticas generales**:
+
    - Número total de vehículos
    - Número total de mantenimientos realizados
    - Número de mantenimientos próximos o vencidos
    - Gasto total en mantenimientos
 
 2. **Gráfico de costes**:
+
    - Visualización de gastos de mantenimiento por vehículo
    - Tendencias de gastos a lo largo del tiempo
 
 3. **Alertas de mantenimientos próximos**:
+
    - Panel con los mantenimientos que requieren atención
    - Información detallada de cuándo vence cada mantenimiento
 
@@ -147,10 +158,12 @@ El Dashboard es la pantalla principal de la aplicación y ofrece una visión gen
 ### Gestión de usuarios (Solo administradores)
 
 1. **Ver todos los usuarios**:
+
    - Los administradores pueden acceder a la sección "Usuarios" en el menú lateral
    - Muestra una lista completa de usuarios registrados en el sistema
 
 2. **Cambiar roles de usuario**:
+
    - Haz clic en el selector de rol junto al usuario
    - Cambia entre "Usuario" y "Administrador"
    - Los cambios se aplican inmediatamente
@@ -165,6 +178,7 @@ El Dashboard es la pantalla principal de la aplicación y ofrece una visión gen
 TallerTracker puede instalarse como una aplicación en dispositivos móviles y ordenadores:
 
 1. **En Chrome (Android/Windows/Mac/Linux)**:
+
    - Abre TallerTracker en Chrome
    - Haz clic en el icono "Instalar" en la barra de direcciones (o en el menú de tres puntos)
    - Sigue las instrucciones para instalar la aplicación
@@ -205,7 +219,5 @@ TallerTracker está desarrollado con las siguientes tecnologías:
 El código fuente está organizado siguiendo las mejores prácticas de desarrollo web moderno, con una arquitectura modular y componentes reutilizables.
 
 ---
-
-¿Necesitas más ayuda? Contacta con el equipo de soporte a través de support@tallertracker.com
 
 © 2025 TallerTracker. Todos los derechos reservados.

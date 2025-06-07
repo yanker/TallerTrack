@@ -12,10 +12,10 @@ export function SignOutButton() {
 
   return (
     <button
-      className="px-4 py-2 rounded bg-blue-300 text-blue-950 border border-blue-950 font-semibold hover:bg-gray-50 hover:text-secondary-hover transition-colors shadow-sm hover:shadow"
+      className="px-4 py-2 rounded-md bg-red-600 text-white font-medium hover:bg-red-700 transition-colors shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-400"
       onClick={() => void signOut()}
     >
-      Salir
+      Cerrar sesión
     </button>
   );
 }

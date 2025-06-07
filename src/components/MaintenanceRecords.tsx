@@ -134,14 +134,14 @@ export function MaintenanceRecords() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
         <h2 className="text-2xl font-bold text-gray-900">Mantenimientos</h2>
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-2 sm:mt-0">
           <button onClick={handleExport} className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-            📊 Exportar
+            Exportar
           </button>
           <button onClick={() => setShowForm(true)} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            + Agregar
+            + Agregar Mnto
           </button>
         </div>
       </div>
