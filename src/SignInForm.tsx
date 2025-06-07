@@ -1,12 +1,23 @@
 'use client';
 import { useAuthActions } from '@convex-dev/auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { HtmlContent } from './components/HtmlContent';
+import { Modal } from './components/Modal';
 
 export function SignInForm() {
   const { signIn } = useAuthActions();
   const [flow, setFlow] = useState<'signIn' | 'signUp'>('signIn');
   const [submitting, setSubmitting] = useState(false);
+  const [guideContent, setGuideContent] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    fetch('/USAGE_GUIDE.md')
+      .then(response => response.text())
+      .then(content => setGuideContent(content))
+      .catch(error => console.error('Error loading guide:', error));
+  }, []);
 
   return (
     <div className="w-full">
@@ -53,15 +64,26 @@ export function SignInForm() {
           </button>
         </div>
       </form>
-      <div className="mt-8 text-center">
-        <a
-          href="/USAGE_GUIDE.md"
-          target="_blank"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
+
+      <div className="mt-6 text-center">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="text-sm text-gray-600 hover:text-gray-800 hover:underline flex items-center justify-center gap-2 mx-auto"
         >
-          📖 Consulta nuestra guía de usuario
-        </a>
+          <span>📖</span>
+          ¿Cómo usar TallerTracker?
+        </button>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Manual de usuario - TallerTracker"
+      >
+        <div className="prose prose-sm max-w-none">
+          <HtmlContent markdown={guideContent} />
+        </div>
+      </Modal>
     </div>
   );
 }
