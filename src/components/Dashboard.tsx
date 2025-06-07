@@ -89,7 +89,7 @@ export function Dashboard() {
                     <p className="text-sm text-gray-600">
                       {item.everyXYears && `Cada ${item.everyXYears} años`}
                       {item.everyXYears && item.everyXKm && ' | '}
-                      {item.everyXKm && `Cada ${item.everyXKm} km`}
+                      {item.everyXKm && `A los ${item.everyXKm} km`}
                     </p>
                   </div>
                 </div>

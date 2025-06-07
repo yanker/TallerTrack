@@ -121,7 +121,7 @@ export function ScheduledMaintenance() {
                     <p className="text-sm text-gray-600">
                       {item.everyXYears && `Cada ${item.everyXYears} años`}
                       {item.everyXYears && item.everyXKm && ' | '}
-                      {item.everyXKm && `Cada ${item.everyXKm} km`}
+                      {item.everyXKm && `A los ${item.everyXKm} km`}
                     </p>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ export function ScheduledMaintenance() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Cada X Kilómetros (opcional)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">A los X Kilómetros (opcional)</label>
                 <input
                   type="number"
                   value={formData.everyXKm}
@@ -244,7 +244,7 @@ export function ScheduledMaintenance() {
                   <p className="text-gray-600">{scheduled.vehicle?.licensePlate}</p>
                   <div className="mt-2 space-y-1">
                     {scheduled.everyXYears && <p className="text-sm text-blue-600">📅 Cada {scheduled.everyXYears} años</p>}
-                    {scheduled.everyXKm && <p className="text-sm text-blue-600">🛣️ Cada {scheduled.everyXKm.toLocaleString()} km</p>}
+                    {scheduled.everyXKm && <p className="text-sm text-blue-600">🛣️ A los {scheduled.everyXKm.toLocaleString()} km</p>}
                     <p className="text-sm text-gray-700">{scheduled.observations}</p>
                     <div className="flex items-center gap-2">
                       <span className={`inline-block w-2 h-2 rounded-full ${scheduled.isActive ? 'bg-green-500' : 'bg-gray-400'}`}></span>
