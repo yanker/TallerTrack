@@ -1,6 +1,7 @@
-import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
-import { CostStatistics } from "./CostStatistics";
+import { useQuery } from 'convex/react';
+import { api } from '../../convex/_generated/api';
+import { CostStatistics } from './CostStatistics';
+import { ColorBadge } from './ColorBadge';
 
 export function Dashboard() {
   const vehicles = useQuery(api.vehicles.listVehicles) || [];
@@ -18,7 +19,7 @@ export function Dashboard() {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
-      
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white p-6 rounded-lg shadow-sm border">
@@ -30,7 +31,7 @@ export function Dashboard() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <div className="flex items-center">
             <div className="text-3xl mr-4">🔧</div>
@@ -40,7 +41,7 @@ export function Dashboard() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <div className="flex items-center">
             <div className="text-3xl mr-4">⚠️</div>
@@ -50,7 +51,7 @@ export function Dashboard() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <div className="flex items-center">
             <div className="text-3xl mr-4">💰</div>
@@ -70,16 +71,15 @@ export function Dashboard() {
       {upcomingCount > 0 && (
         <div className="bg-white rounded-lg shadow-sm border">
           <div className="p-4 border-b">
-            <h3 className="text-lg font-semibold text-gray-900">
-              ⚠️ Mantenimientos Próximos o Vencidos
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-900">⚠️ Mantenimientos Próximos o Vencidos</h3>
           </div>
           <div className="p-4 space-y-3">
             {upcomingMaintenance.map((item) => (
               <div key={item._id} className="bg-red-50 border border-red-200 rounded-lg p-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 flex items-center gap-2">
+                      <ColorBadge color={item.vehicle?.color} size="md" />
                       {item.vehicle?.brand} {item.vehicle?.model}
                     </p>
                     <p className="text-sm text-gray-600">{item.vehicle?.licensePlate}</p>
@@ -88,7 +88,7 @@ export function Dashboard() {
                   <div className="text-right">
                     <p className="text-sm text-gray-600">
                       {item.everyXYears && `Cada ${item.everyXYears} años`}
-                      {item.everyXYears && item.everyXKm && " | "}
+                      {item.everyXYears && item.everyXKm && ' | '}
                       {item.everyXKm && `Cada ${item.everyXKm} km`}
                     </p>
                   </div>
@@ -103,22 +103,19 @@ export function Dashboard() {
       {/* Recent Maintenance */}
       <div className="bg-white rounded-lg shadow-sm border">
         <div className="p-4 border-b">
-          <h3 className="text-lg font-semibold text-gray-900">
-            🔧 Mantenimientos Recientes
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-900">🔧 Mantenimientos Recientes</h3>
         </div>
         <div className="p-4">
           {recentMaintenance.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">
-              No hay mantenimientos registrados
-            </p>
+            <p className="text-gray-500 text-center py-4">No hay mantenimientos registrados</p>
           ) : (
             <div className="space-y-3">
               {recentMaintenance.map((record) => (
                 <div key={record._id} className="border rounded-lg p-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 flex items-center gap-2">
+                        <ColorBadge color={record.vehicle?.color} size="md" />
                         {record.vehicle?.brand} {record.vehicle?.model}
                       </p>
                       <p className="text-sm text-gray-600">
@@ -126,17 +123,11 @@ export function Dashboard() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-gray-900">
-                        {new Date(record.repairDate).toLocaleDateString()}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        {record.vehicleAge} años
-                      </p>
+                      <p className="text-sm text-gray-900">{new Date(record.repairDate).toLocaleDateString()}</p>
+                      <p className="text-sm text-gray-600">{record.vehicleAge} años</p>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-700 mt-2 line-clamp-2">
-                    {record.observations.replace(/<[^>]*>/g, '')}
-                  </p>
+                  <p className="text-sm text-gray-700 mt-2 line-clamp-2">{record.observations.replace(/<[^>]*>/g, '')}</p>
                 </div>
               ))}
             </div>

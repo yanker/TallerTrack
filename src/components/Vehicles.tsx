@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { useQuery, useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
-import { Id } from "../../convex/_generated/dataModel";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { useQuery, useMutation } from 'convex/react';
+import { api } from '../../convex/_generated/api';
+import { Id } from '../../convex/_generated/dataModel';
+import { toast } from 'sonner';
+import { ColorBadge } from './ColorBadge';
 
 export function Vehicles() {
   const vehicles = useQuery(api.vehicles.listVehicles) || [];
@@ -13,22 +14,24 @@ export function Vehicles() {
   const [showForm, setShowForm] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState<any>(null);
   const [formData, setFormData] = useState({
-    purchaseDate: "",
-    initialKm: "",
-    brand: "",
-    model: "",
-    licensePlate: "",
-    otherDetails: "",
+    purchaseDate: '',
+    initialKm: '',
+    brand: '',
+    model: '',
+    licensePlate: '',
+    color: '#3B82F6', // Color por defecto (azul)
+    otherDetails: '',
   });
 
   const resetForm = () => {
     setFormData({
-      purchaseDate: "",
-      initialKm: "",
-      brand: "",
-      model: "",
-      licensePlate: "",
-      otherDetails: "",
+      purchaseDate: '',
+      initialKm: '',
+      brand: '',
+      model: '',
+      licensePlate: '',
+      color: '#3B82F6', // Color por defecto (azul)
+      otherDetails: '',
     });
     setEditingVehicle(null);
     setShowForm(false);
@@ -36,7 +39,7 @@ export function Vehicles() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       if (editingVehicle) {
         await updateVehicle({
@@ -46,9 +49,10 @@ export function Vehicles() {
           brand: formData.brand,
           model: formData.model,
           licensePlate: formData.licensePlate,
+          color: formData.color,
           otherDetails: formData.otherDetails || undefined,
         });
-        toast.success("Vehículo actualizado");
+        toast.success('Vehículo actualizado');
       } else {
         await createVehicle({
           purchaseDate: formData.purchaseDate,
@@ -56,13 +60,14 @@ export function Vehicles() {
           brand: formData.brand,
           model: formData.model,
           licensePlate: formData.licensePlate,
+          color: formData.color,
           otherDetails: formData.otherDetails || undefined,
         });
-        toast.success("Vehículo creado");
+        toast.success('Vehículo creado');
       }
       resetForm();
     } catch (error) {
-      toast.error("Error al guardar el vehículo");
+      toast.error('Error al guardar el vehículo');
     }
   };
 
@@ -73,19 +78,20 @@ export function Vehicles() {
       brand: vehicle.brand,
       model: vehicle.model,
       licensePlate: vehicle.licensePlate,
-      otherDetails: vehicle.otherDetails || "",
+      color: vehicle.color || '#3B82F6', // Usar el color existente o el predeterminado
+      otherDetails: vehicle.otherDetails || '',
     });
     setEditingVehicle(vehicle);
     setShowForm(true);
   };
 
   const handleDelete = async (vehicleId: string) => {
-    if (confirm("¿Estás seguro de que quieres eliminar este vehículo? Se eliminarán todos sus mantenimientos.")) {
+    if (confirm('¿Estás seguro de que quieres eliminar este vehículo? Se eliminarán todos sus mantenimientos.')) {
       try {
-        await deleteVehicle({ vehicleId: vehicleId as Id<"vehicles"> });
-        toast.success("Vehículo eliminado");
+        await deleteVehicle({ vehicleId: vehicleId as Id<'vehicles'> });
+        toast.success('Vehículo eliminado');
       } catch (error) {
-        toast.error("Error al eliminar el vehículo");
+        toast.error('Error al eliminar el vehículo');
       }
     }
   };
@@ -94,10 +100,7 @@ export function Vehicles() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">Vehículos</h2>
-        <button
-          onClick={() => setShowForm(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-        >
+        <button onClick={() => setShowForm(true)} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
           + Agregar Vehículo
         </button>
       </div>
@@ -106,15 +109,11 @@ export function Vehicles() {
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold mb-4">
-              {editingVehicle ? "Editar Vehículo" : "Nuevo Vehículo"}
-            </h3>
-            
+            <h3 className="text-lg font-semibold mb-4">{editingVehicle ? 'Editar Vehículo' : 'Nuevo Vehículo'}</h3>
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Fecha de Compra
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Compra</label>
                 <input
                   type="date"
                   value={formData.purchaseDate}
@@ -125,9 +124,7 @@ export function Vehicles() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Kilómetros Iniciales
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Kilómetros Iniciales</label>
                 <input
                   type="number"
                   value={formData.initialKm}
@@ -139,9 +136,7 @@ export function Vehicles() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Marca
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Marca</label>
                 <input
                   type="text"
                   value={formData.brand}
@@ -152,9 +147,7 @@ export function Vehicles() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Modelo
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
                 <input
                   type="text"
                   value={formData.model}
@@ -165,9 +158,7 @@ export function Vehicles() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Matrícula
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Matrícula</label>
                 <input
                   type="text"
                   value={formData.licensePlate}
@@ -178,9 +169,33 @@ export function Vehicles() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Otros Detalles
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Color del vehículo</label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#6366F1', '#EC4899', '#000000', '#71717A'].map((color) => (
+                    <button
+                      key={color}
+                      type="button"
+                      className={`w-8 h-8 rounded-full border-2 ${formData.color === color ? 'border-gray-900 ring-2 ring-blue-500' : 'border-gray-300'}`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => setFormData({ ...formData, color })}
+                    />
+                  ))}
+                  <input
+                    type="color"
+                    value={formData.color}
+                    onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                    className="h-8 w-8 cursor-pointer border rounded-full overflow-hidden"
+                    title="Personalizar color"
+                  />
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <ColorBadge color={formData.color} size="md" />
+                  <span>El color seleccionado se mostrará junto a la marca y modelo</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Otros Detalles</label>
                 <textarea
                   value={formData.otherDetails}
                   onChange={(e) => setFormData({ ...formData, otherDetails: e.target.value })}
@@ -190,11 +205,8 @@ export function Vehicles() {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <button
-                  type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  {editingVehicle ? "Actualizar" : "Crear"}
+                <button type="submit" className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                  {editingVehicle ? 'Actualizar' : 'Crear'}
                 </button>
                 <button
                   type="button"
@@ -212,39 +224,26 @@ export function Vehicles() {
       {/* Vehicles List */}
       <div className="space-y-4">
         {vehicles.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            No hay vehículos registrados
-          </div>
+          <div className="text-center py-8 text-gray-500">No hay vehículos registrados</div>
         ) : (
           vehicles.map((vehicle) => (
             <div key={vehicle._id} className="bg-white rounded-lg shadow-sm border p-4">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <ColorBadge color={vehicle.color} size="lg" />
                     {vehicle.brand} {vehicle.model}
                   </h3>
                   <p className="text-gray-600">Matrícula: {vehicle.licensePlate}</p>
-                  <p className="text-sm text-gray-500">
-                    Comprado: {new Date(vehicle.purchaseDate).toLocaleDateString()}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Km iniciales: {vehicle.initialKm.toLocaleString()}
-                  </p>
-                  {vehicle.otherDetails && (
-                    <p className="text-sm text-gray-600 mt-2">{vehicle.otherDetails}</p>
-                  )}
+                  <p className="text-sm text-gray-500">Comprado: {new Date(vehicle.purchaseDate).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-500">Km iniciales: {vehicle.initialKm.toLocaleString()}</p>
+                  {vehicle.otherDetails && <p className="text-sm text-gray-600 mt-2">{vehicle.otherDetails}</p>}
                 </div>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(vehicle)}
-                    className="text-blue-600 hover:text-blue-800 p-2"
-                  >
+                  <button onClick={() => handleEdit(vehicle)} className="text-blue-600 hover:text-blue-800 p-2">
                     ✏️
                   </button>
-                  <button
-                    onClick={() => handleDelete(vehicle._id)}
-                    className="text-red-600 hover:text-red-800 p-2"
-                  >
+                  <button onClick={() => handleDelete(vehicle._id)} className="text-red-600 hover:text-red-800 p-2">
                     🗑️
                   </button>
                 </div>

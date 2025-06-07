@@ -44,7 +44,7 @@
 - Navegación inferior optimizada para móviles
 - Modales para formularios
 
-# Car Maintenance Tracking PWA
+# TallerTracker Tracking PWA
 
 This is a project built with using [Convex](https://convex.dev) as its backend.
 
