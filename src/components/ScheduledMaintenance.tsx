@@ -161,7 +161,7 @@ export function ScheduledMaintenance() {
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mt-2">{item.observations}</p>
+                <p className="text-sm text-gray-700 mt-2 whitespace-pre-wrap">{item.observations}</p>
               </div>
             ))}
           </div>
@@ -299,7 +299,7 @@ export function ScheduledMaintenance() {
                     <div className="mt-2 space-y-1">
                       {scheduled.everyXYears && <p className="text-sm text-blue-600">📅 Cada {scheduled.everyXYears} años</p>}
                       {scheduled.everyXKm && <p className="text-sm text-blue-600">🛣️ Cada {scheduled.everyXKm.toLocaleString()} km</p>}
-                      <p className="text-sm text-gray-700">{scheduled.observations}</p>
+                      <p className="text-sm text-gray-700 whitespace-pre-wrap">{scheduled.observations}</p>
                       <div className="flex items-center gap-2">
                         <span className={`inline-block w-2 h-2 rounded-full ${scheduled.isActive ? 'bg-green-500' : 'bg-gray-400'}`}></span>
                         <span className="text-sm text-gray-600">{scheduled.isActive ? 'Activo' : 'Inactivo'}</span>

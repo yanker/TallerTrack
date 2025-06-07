@@ -237,7 +237,7 @@ export function Vehicles() {
                   <p className="text-gray-600">Matrícula: {vehicle.licensePlate}</p>
                   <p className="text-sm text-gray-500">Comprado: {new Date(vehicle.purchaseDate).toLocaleDateString()}</p>
                   <p className="text-sm text-gray-500">Km iniciales: {vehicle.initialKm.toLocaleString()}</p>
-                  {vehicle.otherDetails && <p className="text-sm text-gray-600 mt-2">{vehicle.otherDetails}</p>}
+                  {vehicle.otherDetails && <p className="text-sm text-gray-600 mt-2 whitespace-pre-wrap">{vehicle.otherDetails}</p>}
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => handleEdit(vehicle)} className="text-blue-600 hover:text-blue-800 p-2">
