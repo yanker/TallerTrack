@@ -281,10 +281,15 @@ export function MaintenanceRecords() {
                   </h3>
                   <p className="text-gray-600">
                     {record.vehicle?.licensePlate} • {record.currentKm.toLocaleString()} km
-                  </p>                  <p className="text-sm text-gray-500">
+                  </p>{' '}
+                  <p className="text-sm text-gray-500">
                     <span className="text-purple-600 font-bold">{new Date(record.repairDate).toLocaleDateString()}</span> • {record.vehicleAge} años
-                    {record.cost && ` • `}<span className="text-red-600 font-bold">{record.cost && record.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
-                  </p><div className="mt-2">
+                    {record.cost && ` • `}
+                    <span className="text-red-600 font-bold">
+                      {record.cost && record.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                    </span>
+                  </p>
+                  <div className="mt-2">
                     <p className="text-sm text-gray-700 whitespace-pre-wrap">{record.observations}</p>
                   </div>
                 </div>

@@ -121,9 +121,16 @@ export function Dashboard() {
                       <p className="text-sm text-gray-600">
                         {record.vehicle?.licensePlate} • {record.currentKm} km
                       </p>
-                    </div>                    <div className="text-right">                      <p className="text-sm text-red-600 font-bold">{new Date(record.repairDate).toLocaleDateString()}</p>
+                    </div>{' '}
+                    <div className="text-right">
+                      {' '}
+                      <p className="text-sm text-red-600 font-bold">{new Date(record.repairDate).toLocaleDateString()}</p>
                       <p className="text-sm text-gray-600">{record.vehicleAge} años</p>
-                      {record.cost && <p className="text-sm text-red-600 font-bold">{record.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</p>}
+                      {record.cost && (
+                        <p className="text-sm text-red-600 font-bold">
+                          {record.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <p className="text-sm text-gray-700 mt-2 line-clamp-2 whitespace-pre-wrap">{record.observations}</p>
