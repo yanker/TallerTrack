@@ -58,7 +58,7 @@ export function Dashboard() {
             <div>
               <p className="text-sm text-gray-600">Gasto Total</p>
               <p className="text-2xl font-bold text-gray-900">
-                {costStatistics?.totalCost?.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) || '0 €'}
+                {costStatistics?.totalCost?.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) ?? '0 €'}
               </p>
             </div>
           </div>
@@ -68,7 +68,7 @@ export function Dashboard() {
       <CostStatistics />
 
       {/* Upcoming Maintenance */}
-      {upcomingCount > 0 && (
+      {/* {upcomingCount > 0 && (
         <div className="bg-white rounded-lg shadow-sm border">
           <div className="p-4 border-b">
             <h3 className="text-lg font-semibold text-gray-900">⚠️ Mantenimientos Próximos o Vencidos</h3>
@@ -87,18 +87,18 @@ export function Dashboard() {
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-gray-600">
-                      {item.everyXYears && `Cada ${item.everyXYears} años`}
+                      {item.everyXYears && `📅 Cada ${item.everyXYears} ${item.everyXYears === 1 ? 'año' : 'años'}`}
                       {item.everyXYears && item.everyXKm && ' | '}
-                      {item.everyXKm && `Cada ${item.everyXKm} km`}
+                      {item.everyXKm && `🛣️ Cada ${item.everyXKm.toLocaleString()} km`}
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mt-2">{item.observations}</p>
+                <p className="text-sm text-gray-700 mt-2 whitespace-pre-wrap">{item.observations}</p>
               </div>
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Recent Maintenance */}
       <div className="bg-white rounded-lg shadow-sm border">
@@ -119,11 +119,10 @@ export function Dashboard() {
                         {record.vehicle?.brand} {record.vehicle?.model}
                       </p>
                       <p className="text-sm text-gray-600">
-                        {record.vehicle?.licensePlate} • {record.currentKm} km
+                        {record.vehicle?.licensePlate} • {record.currentKm.toLocaleString()} km
                       </p>
-                    </div>{' '}
+                    </div>
                     <div className="text-right">
-                      {' '}
                       <p className="text-sm text-red-600 font-bold">{new Date(record.repairDate).toLocaleDateString()}</p>
                       <p className="text-sm text-gray-600">{record.vehicleAge} años</p>
                       {record.cost && (
@@ -133,7 +132,7 @@ export function Dashboard() {
                       )}
                     </div>
                   </div>
-                  <p className="text-sm text-gray-700 mt-2 line-clamp-2 whitespace-pre-wrap">{record.observations}</p>
+                  <p className="text-sm text-gray-700 mt-2 whitespace-pre-wrap">{record.observations}</p>
                 </div>
               ))}
             </div>
