@@ -10,11 +10,10 @@ export function MaintenanceRecords() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('');
 
-  const maintenanceRecords =
-    useQuery(api.maintenance.listMaintenanceRecords, {
-      vehicleId: selectedVehicle ? (selectedVehicle as Id<'vehicles'>) : undefined,
-      searchTerm: searchTerm || undefined,
-    }) || [];
+  const maintenanceRecords = useQuery(api.maintenance.listMaintenanceRecords, {
+    vehicleId: selectedVehicle ? (selectedVehicle as Id<'vehicles'>) : undefined,
+    searchTerm: searchTerm || undefined,
+  }) || [];
 
   const exportData = useQuery(api.maintenance.exportMaintenanceRecords) || [];
 
@@ -46,7 +45,6 @@ export function MaintenanceRecords() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       if (editingRecord) {
         await updateRecord({
@@ -69,7 +67,7 @@ export function MaintenanceRecords() {
         toast.success('Mantenimiento registrado');
       }
       resetForm();
-    } catch (error) {
+    } catch {
       toast.error('Error al guardar el mantenimiento');
     }
   };
@@ -91,7 +89,7 @@ export function MaintenanceRecords() {
       try {
         await deleteRecord({ recordId: recordId as Id<'maintenanceRecords'> });
         toast.success('Registro eliminado');
-      } catch (error) {
+      } catch {
         toast.error('Error al eliminar el registro');
       }
     }
@@ -103,23 +101,25 @@ export function MaintenanceRecords() {
       return;
     }
 
-    const csvContent = [
-      ['Fecha', 'Marca', 'Modelo', 'Matrícula', 'Kilómetros', 'Edad Vehículo', 'Coste', 'Observaciones'],
+    // Añadir BOM para UTF-8
+    const BOM = '\uFEFF';
+    const csvContent = BOM + [
+      ['Fecha', 'Marca', 'Modelo', 'Matrícula', 'Kilómetros', 'Edad Vehículo', 'Coste (€)', 'Observaciones'],
       ...exportData.map((record) => [
         record.fecha,
         record.marca,
         record.modelo,
         record.matricula,
-        record.kilometros,
+        record.kilometros.toLocaleString(),
         record.edad_vehiculo,
-        record.coste,
+        record.coste ? record.coste.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
         record.observaciones,
       ]),
     ]
-      .map((row) => row.join(','))
-      .join('\n');
+      .map((row) => row.join(';'))
+      .join('\r\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
@@ -128,6 +128,7 @@ export function MaintenanceRecords() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 
     toast.success('Datos exportados');
   };
@@ -137,10 +138,16 @@ export function MaintenanceRecords() {
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
         <h2 className="text-2xl font-bold text-gray-900">Mantenimientos</h2>
         <div className="flex gap-2 mt-2 sm:mt-0">
-          <button onClick={handleExport} className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+          <button 
+            onClick={handleExport} 
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+          >
             Exportar
           </button>
-          <button onClick={() => setShowForm(true)} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          <button 
+            onClick={() => setShowForm(true)} 
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
             + Agregar Mnto
           </button>
         </div>
@@ -181,9 +188,11 @@ export function MaintenanceRecords() {
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold mb-4">{editingRecord ? 'Editar Mantenimiento' : 'Nuevo Mantenimiento'}</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              {editingRecord ? 'Editar Mantenimiento' : 'Nuevo Mantenimiento'}
+            </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Vehículo</label>
                 <select
@@ -250,7 +259,10 @@ export function MaintenanceRecords() {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <button type="submit" className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
                   {editingRecord ? 'Actualizar' : 'Crear'}
                 </button>
                 <button
@@ -281,12 +293,16 @@ export function MaintenanceRecords() {
                   </h3>
                   <p className="text-gray-600">
                     {record.vehicle?.licensePlate} • {record.currentKm.toLocaleString()} km
-                  </p>{' '}
+                  </p>
                   <p className="text-sm text-gray-500">
-                    <span className="text-purple-600 font-bold">{new Date(record.repairDate).toLocaleDateString()}</span> • {record.vehicleAge} años
+                    <span className="text-purple-600 font-bold">
+                      {new Date(record.repairDate).toLocaleDateString()}
+                    </span>{' '}
+                    • {record.vehicleAge} años
                     {record.cost && ` • `}
                     <span className="text-red-600 font-bold">
-                      {record.cost && record.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                      {record.cost &&
+                        record.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
                     </span>
                   </p>
                   <div className="mt-2">
@@ -297,7 +313,13 @@ export function MaintenanceRecords() {
                   <button onClick={() => handleEdit(record)} className="text-blue-600 hover:text-blue-800 p-2">
                     ✏️
                   </button>
-                  <button onClick={() => handleDelete(record._id)} className="text-red-600 hover:text-red-800 p-2">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      void handleDelete(record._id);
+                    }}
+                    className="text-red-600 hover:text-red-800 p-2"
+                  >
                     🗑️
                   </button>
                 </div>
