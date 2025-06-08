@@ -48,12 +48,14 @@ export const getCostStatistics = query({
 
     // Prepare chart data (last 10 years)
     const chartData = [];
-    for (let i = 9; i >= 0; i--) {
-      const year = currentYear - i;
-      chartData.push({
-        year: year.toString(),
-        cost: costsByYear[year] || 0,
-      });
+    for (let year = currentYear; year >= 2010; year--) {
+      const cost = costsByYear[year] || 0;
+      if (cost > 0 || year === currentYear) {
+        chartData.push({
+          year: year.toString(),
+          cost,
+        });
+      }
     }
 
     return {
