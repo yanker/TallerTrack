@@ -10,7 +10,8 @@ export const listNotes = query({
       throw new Error('Not authenticated');
     }
 
-    const notes = await ctx.db      .query('notes')
+    const notes = await ctx.db
+      .query('notes')
       .filter((q) => q.eq(q.field('tokenIdentifier'), identity.tokenIdentifier))
       .order('desc')
       .collect();
@@ -26,7 +27,8 @@ export const createNote = mutation({
     details: v.string(),
     date: v.string(),
   },
-  handler: async (ctx, args) => {    const identity = await ctx.auth.getUserIdentity();
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new Error('Not authenticated');
     }
@@ -52,7 +54,8 @@ export const updateNote = mutation({
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new Error('Not authenticated');
-    }    const note = await ctx.db.get(args.noteId);
+    }
+    const note = await ctx.db.get(args.noteId);
     if (!note || note.tokenIdentifier !== identity.tokenIdentifier) {
       throw new Error('Note not found or unauthorized');
     }
@@ -74,7 +77,8 @@ export const deleteNote = mutation({
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new Error('Not authenticated');
-    }    const note = await ctx.db.get(args.noteId);
+    }
+    const note = await ctx.db.get(args.noteId);
     if (!note || note.tokenIdentifier !== identity.tokenIdentifier) {
       throw new Error('Note not found or unauthorized');
     }
