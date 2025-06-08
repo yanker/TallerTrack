@@ -45,7 +45,8 @@ export default function App() {
         <div className="min-h-screen flex items-center justify-center p-4">
           <div className="w-full max-w-md">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">🚗 TallerTracker</h1>
+              <img src="/favicon-96x96.png" alt="TallerTracker Logo" className="mx-auto mb-4 w-24 h-24" />
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">TallerTracker</h1>
               <p className="text-gray-600">Gestiona el mantenimiento de tus vehículos</p>
             </div>
             <SignInForm />
@@ -57,9 +58,10 @@ export default function App() {
         <div className="pb-20">
           {/* Header */}
           <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-            <div className="px-4 py-3 flex justify-between items-center">
-              <h1 className="text-xl font-semibold text-gray-900">🚗 TallerTraker</h1>
-              <div className="flex items-center gap-2">
+            <div className="px-4 py-3 flex justify-start items-center gap-4">
+              <img src="/favicon-96x96.png" alt="TallerTracker Logo" className="w-12 h-12" />
+              <h1 className="text-xl font-semibold text-gray-900">TallerTracker</h1>
+              <div className="flex-1 flex justify-end items-center gap-2">
                 {/* <span className="text-sm text-gray-600">{user?.name || user?.email}</span> */}
                 <SignOutButton />
               </div>
