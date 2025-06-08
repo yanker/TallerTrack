@@ -23,6 +23,10 @@ Este proyecto ha sido creado para una necesidad propia. Con ello he conseguido:
 - VERCEL
 - GIT
 
+## URL VERCEL
+
+https://taller-tracker.vercel.app/
+
 ## REFLEXIÓN
 
 - Luego en mis peripecias y tiempo invertido para poner la database de CONVEX, me pude generar la dist, probarla en local con el servidor serve dist, hacer distintas pruebas, crear ramas de versiones funcionales, renombrar... he aprendido mucho aquí
