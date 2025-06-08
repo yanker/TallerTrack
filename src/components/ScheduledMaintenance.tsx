@@ -96,7 +96,9 @@ export function ScheduledMaintenance() {
       return;
     }
 
-    const csvContent = [
+    // Añadir BOM para UTF-8
+    const BOM = '\uFEFF';
+    const csvContent = BOM + [
       ['Marca', 'Modelo', 'Matrícula', 'Cada X Años', 'Cada X Km', 'Estado', 'Observaciones'],
       ...exportData.map((record) => [
         record.marca,
@@ -108,10 +110,10 @@ export function ScheduledMaintenance() {
         record.observaciones,
       ]),
     ]
-      .map((row) => row.join(','))
-      .join('\n');
+      .map((row) => row.join(';'))
+      .join('\r\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
@@ -120,6 +122,7 @@ export function ScheduledMaintenance() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 
     toast.success('Datos exportados');
   };
