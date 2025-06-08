@@ -130,6 +130,12 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
      - Mantenimientos vencidos por tiempo o kilometraje
      - Mantenimientos próximos (a menos de 6 meses o al 10% del kilometraje programado)
 
+### Notas Internas
+
+El apartado de notas internas registrará notas, comentarios y otros conceptos que puedan ser importantes para el usuario con respecto a sus mantenimientos u otros aspectos
+
+Puede crear notas, clickando en el botín de Nueva nota y rellenando los datos de fecha, título y detalles.
+
 ### Dashboard
 
 El Dashboard es la pantalla principal de la aplicación y ofrece una visión general de:

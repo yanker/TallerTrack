@@ -9,6 +9,7 @@ import { Vehicles } from './components/Vehicles';
 import { ScheduledMaintenance } from './components/ScheduledMaintenance';
 import { Users } from './components/Users';
 import { Dashboard } from './components/Dashboard';
+import { Notes } from './components/Notes';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -72,11 +73,12 @@ export default function App() {
             {activeTab === 'vehicles' && <Vehicles />}
             {activeTab === 'scheduled' && <ScheduledMaintenance />}
             {activeTab === 'users' && user?.role === 'ADMIN' && <Users />}
+            {activeTab === 'notes' && <Notes />}
           </main>
 
           {/* Bottom Navigation */}
           <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
-            <div className="grid grid-cols-4 md:grid-cols-5">
+            <div className="grid grid-cols-5 md:grid-cols-6">
               <button
                 onClick={() => setActiveTab('dashboard')}
                 className={`p-3 text-center ${activeTab === 'dashboard' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'}`}
@@ -118,6 +120,14 @@ export default function App() {
                   <div className="text-xs">Usuarios</div>
                 </button>
               )}
+
+              <button
+                onClick={() => setActiveTab('notes')}
+                className={`p-3 text-center ${activeTab === 'notes' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'}`}
+              >
+                <div className="text-xl mb-1">📝</div>
+                <div className="text-xs">Notas</div>
+              </button>
             </div>
           </nav>
         </div>

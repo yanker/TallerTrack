@@ -16,6 +16,7 @@ import type {
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as maintenance from "../maintenance.js";
+import type * as notes from "../notes.js";
 import type * as router from "../router.js";
 import type * as scheduledMaintenance from "../scheduledMaintenance.js";
 import type * as setup from "../setup.js";
@@ -35,6 +36,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   http: typeof http;
   maintenance: typeof maintenance;
+  notes: typeof notes;
   router: typeof router;
   scheduledMaintenance: typeof scheduledMaintenance;
   setup: typeof setup;

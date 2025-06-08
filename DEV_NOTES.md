@@ -30,3 +30,9 @@ https://taller-tracker.vercel.app/
 ## REFLEXIÓN
 
 - Luego en mis peripecias y tiempo invertido para poner la database de CONVEX, me pude generar la dist, probarla en local con el servidor serve dist, hacer distintas pruebas, crear ramas de versiones funcionales, renombrar... he aprendido mucho aquí
+
+# NOTAS DESARROLLO
+
+Si se crea un nueva sección y necesitamos publicar la nueva tabla en CONVEX deberemos realizar el comendo `npx convex deploy`
+
+Generamos la build `npm run build`, y luego si lo queremos probar en local la dist, hacemos `serve dist` (ya paquete instalado globalmente en local)

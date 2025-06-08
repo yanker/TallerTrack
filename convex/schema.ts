@@ -47,6 +47,16 @@ const applicationTables = {
   })
     .index('by_user_id', ['userId'])
     .index('by_vehicle_id', ['vehicleId']),
+
+  // Notas personales
+  notes: defineTable({
+    tokenIdentifier: v.string(),
+    title: v.string(),
+    details: v.string(),
+    date: v.string(),
+  })
+    .index('by_token', ['tokenIdentifier'])
+    .index('by_date', ['date']),
 };
 
 export default defineSchema({
