@@ -3,23 +3,40 @@ import { HtmlContent } from './components/HtmlContent';
 
 export function Guide() {
   const [guideContent, setGuideContent] = useState('');
+
   useEffect(() => {
-    const baseUrl = import.meta.env.BASE_URL || '/';
-    fetch(`${baseUrl}USAGE_GUIDE.md`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    // Try multiple possible paths for the guide file
+    const paths: string[] = [
+      '/docs/USAGE_GUIDE.md',
+      '/USAGE_GUIDE.md',
+      '/public/docs/USAGE_GUIDE.md',
+      '/public/USAGE_GUIDE.md'
+    ];
+
+    const tryLoadGuide = async (attemptPaths: string[]): Promise<boolean> => {
+      for (const path of attemptPaths) {
+        try {
+          console.log(`Trying to load guide from: ${path}`);
+          const response = await fetch(path);
+          if (response.ok) {
+            const content = await response.text();
+            console.log(`Guide loaded successfully from ${path}`);
+            setGuideContent(content);
+            return true;
+          }
+        } catch (error) {
+          console.log(`Failed to load from ${path}:`, error);
         }
-        return response.text();
-      })
-      .then((content) => {
-        console.log('Guide content loaded successfully');
-        setGuideContent(content);
-      })
-      .catch((error) => {
-        console.error('Error loading guide:', error);
+      }
+      return false;
+    };
+
+    void tryLoadGuide(paths).then(success => {
+      if (!success) {
+        console.error('Failed to load guide from all paths');
         setGuideContent('Error loading guide. Please try again later.');
-      });
+      }
+    });
   }, []);
 
   return (
