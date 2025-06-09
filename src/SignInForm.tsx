@@ -11,6 +11,7 @@ export function SignInForm() {
   const [submitting, setSubmitting] = useState(false);
   const [guideContent, setGuideContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     fetch('/USAGE_GUIDE.md')
@@ -19,14 +20,34 @@ export function SignInForm() {
       .catch((error) => console.error('Error loading guide:', error));
   }, []);
 
+  const validatePassword = (password: string) => {
+    if (flow === 'signUp') {
+      if (password.length < 6) {
+        return 'La contraseña debe tener al menos 6 caracteres';
+      }
+      if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password)) {
+        return 'La contraseña debe contener al menos una letra y un número';
+      }
+    }
+    return '';
+  };
+
   return (
     <div className="w-full">
       <form
         className="flex flex-col gap-form-field"
         onSubmit={(e) => {
           e.preventDefault();
-          setSubmitting(true);
           const formData = new FormData(e.target as HTMLFormElement);
+          const password = formData.get('password') as string;
+          
+          const error = validatePassword(password);
+          if (error) {
+            setPasswordError(error);
+            return;
+          }
+          
+          setSubmitting(true);
           formData.set('flow', flow);
           void signIn('password', formData).catch((error) => {
             let toastTitle = '';
@@ -41,7 +62,25 @@ export function SignInForm() {
         }}
       >
         <input className="auth-input-field" type="email" name="email" placeholder="Email" required />
-        <input className="auth-input-field" type="password" name="password" placeholder="Password" required />
+        <div>
+          <input 
+            className={`auth-input-field w-full ${passwordError ? 'border-red-500' : ''}`}
+            type="password" 
+            name="password" 
+            placeholder="Contraseña" 
+            required 
+            onChange={(e) => {
+              const error = validatePassword(e.target.value);
+              setPasswordError(error);
+            }}
+          />
+          {passwordError && flow === 'signUp' && (
+            <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+          )}
+          {flow === 'signUp' && !passwordError && (
+            <p className="text-gray-500 text-sm mt-1">Mínimo 6 caracteres, debe incluir letras y números</p>
+          )}
+        </div>
         <button
           className={`w-full px-4 py-3 rounded font-semibold text-white shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
             flow === 'signUp' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-primary hover:bg-primary-hover'
