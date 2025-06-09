@@ -31,11 +31,38 @@
 - Ver todos los usuarios
 - Cambiar roles (Admin/Usuario)
 - Eliminar usuarios y sus datos
+- **Clonación de datos** entre usuarios
+- **Gestión de perfiles** de usuario
 
-### 🔐 Autenticación
+### 📤 Exportación de Datos
+
+- Exportación a XLS (Excel) con formato mejorado
+- Exportación de registros de mantenimiento
+- Exportación de vehículos
+- Personalización de columnas
+
+### 📱 PWA (Progressive Web App)
+
+- Instalable en dispositivos móviles y escritorio
+- Funcionamiento offline parcial
+- Notificaciones push
+- Actualizaciones automáticas
+- Sincronización en segundo plano
+
+### 📖 Documentación y Guías
+
+- Manual de usuario integrado
+- Acceso directo al manual desde la aplicación
+- Vista independiente del manual
+- Guías contextuales en cada sección
+- Ejemplos de uso
+
+### 🔐 Autenticación y Perfiles
 
 - Sistema de login con email/contraseña
+- Validación de contraseña reforzada
 - Roles de usuario (Admin/Usuario)
+- Perfiles personalizables
 - Protección de rutas según permisos
 
 ### 📱 Interfaz Móvil
@@ -43,6 +70,15 @@
 - Diseño responsive
 - Navegación inferior optimizada para móviles
 - Modales para formularios
+
+### 📝 Notas Internas
+
+- Sistema de notas y comentarios
+- Registro de observaciones importantes
+- Organización por fecha y título
+- Editor de texto enriquecido
+- Búsqueda y filtrado de notas
+- Vinculación con mantenimientos
 
 # TallerTracker Tracking PWA
 

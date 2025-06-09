@@ -130,6 +130,12 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
      - Mantenimientos vencidos por tiempo o kilometraje
      - Mantenimientos próximos (a menos de 6 meses o al 10% del kilometraje programado)
 
+### Notas Internas
+
+- El apartado de notas internas registrará notas, comentarios y otros conceptos que puedan ser importantes para el usuario con respecto a sus mantenimientos u otros aspectos
+
+- Puede crear notas, clickando en el botín de Nueva nota y rellenando los datos de fecha, título y detalles.
+
 ### Dashboard
 
 El Dashboard es la pantalla principal de la aplicación y ofrece una visión general de:
@@ -169,25 +175,62 @@ El Dashboard es la pantalla principal de la aplicación y ofrece una visión gen
    - Los cambios se aplican inmediatamente
 
 3. **Eliminar usuarios**:
+
    - Haz clic en el icono de papelera (🗑️) junto al usuario
    - Confirma la acción en el diálogo de confirmación
    - **Importante**: Eliminar un usuario también eliminará todos sus vehículos, registros y programaciones
 
-## 📱 Instalación como PWA
+4. **Clonación de datos entre usuarios**:
+   - Accede a la sección "Admin" en el menú inferior
+   - Verás una lista de todos los usuarios del sistema
+   - Para cada usuario origen puedes:
+     - Ver su email y rol actual
+     - Seleccionar un usuario destino del desplegable
+     - Clonar todos sus datos con un clic
+   - **Restricciones importantes**:
+     - No se pueden clonar datos desde un administrador
+     - No se pueden clonar datos hacia un administrador
+     - No se pueden clonar datos al mismo usuario
+   - **Proceso de clonación**:
+     - Se borran todos los datos existentes del usuario destino
+     - Se copian los vehículos del usuario origen
+     - Se copian los registros de mantenimiento
+     - Se copian los mantenimientos programados
+     - Se copian las notas
 
-TallerTracker puede instalarse como una aplicación en dispositivos móviles y ordenadores:
+### Exportación de datos mejorada
 
-1. **En Chrome (Android/Windows/Mac/Linux)**:
+1. **Exportación a Excel (XLS)**:
+   - En la sección de mantenimientos, usa el botón "📊 Exportar XLS"
+   - El archivo Excel incluirá:
+     - Formato profesional con colores y estilos
+     - Columnas autoajustadas
+     - Filtros predefinidos
+     - Fórmulas de totales
+   - Datos incluidos:
+     - Detalles del vehículo
+     - Fecha y kilometraje
+     - Costes y totales
+     - Observaciones formateadas
 
-   - Abre TallerTracker en Chrome
-   - Haz clic en el icono "Instalar" en la barra de direcciones (o en el menú de tres puntos)
-   - Sigue las instrucciones para instalar la aplicación
+### Acceso al Manual de Usuario
 
-2. **En Safari (iOS/iPadOS)**:
-   - Abre TallerTracker en Safari
-   - Toca el icono de compartir
-   - Selecciona "Añadir a pantalla de inicio"
-   - La aplicación aparecerá como un icono en tu pantalla de inicio
+1. **Durante el login**:
+
+   - Botón "📖 ¿Cómo usar TallerTracker?"
+   - Se abre en un modal para consulta rápida
+   - Opción "Ver manual en nueva pestaña"
+
+2. **Durante la sesión**:
+   - Acceso directo al manual desde cualquier página
+   - Búsqueda integrada de temas
+   - Navegación por secciones
+
+### Notas y Comentarios
+
+Los usuarios pueden dejar notas y comentarios en sus registros de mantenimiento y vehículos.
+
+Las notas son texto libre y se pueden usar para cualquier observación adicional.
 
 ## ❓ Preguntas frecuentes
 
@@ -205,6 +248,15 @@ R: Actualmente esta funcionalidad no está disponible, pero está planeada para 
 
 **P: ¿Qué significa el punto de color junto a cada vehículo?**  
 R: Es un identificador visual que ayuda a reconocer rápidamente cada vehículo. Puedes asignar un color a cada vehículo al crearlo o editarlo.
+
+**P: ¿Cómo funciona la clonación de datos entre usuarios?**  
+R: Los administradores pueden copiar todos los datos de un usuario a otro. Ten en cuenta que esto borrará los datos existentes del usuario destino antes de la clonación.
+
+**P: ¿Puedo exportar mis datos en diferentes formatos?**  
+R: Sí, la aplicación permite exportar en formato XLS (Excel) con formato mejorado y CSV para mayor compatibilidad.
+
+**P: ¿Cómo accedo al manual de usuario?**  
+R: Puedes acceder al manual desde la pantalla de login, durante la sesión, o directamente a través de la URL /guide.
 
 ## 🔧 Información técnica
 
