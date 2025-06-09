@@ -71,17 +71,74 @@ export const cloneUserData = mutation({
     targetUserId: v.id('users'),
   },
   handler: async (ctx, args) => {
-    // Verificar que el usuario destino no es administrador
+    // Verificar que ambos usuarios existen
+    const sourceUser = await ctx.db.get(args.sourceUserId);
+    const targetUser = await ctx.db.get(args.targetUserId);
+
+    if (!sourceUser) {
+      throw new Error('Usuario origen no encontrado');
+    }
+    if (!targetUser) {
+      throw new Error('Usuario destino no encontrado');
+    }
+
+    // Verificar que no es el mismo usuario
+    if (args.sourceUserId === args.targetUserId) {
+      throw new Error('No se pueden clonar datos al mismo usuario');
+    }
+
+    // Obtener los perfiles de usuario
+    const sourceProfile = await ctx.db
+      .query('userProfiles')
+      .withIndex('by_user_id', (q) => q.eq('userId', args.sourceUserId))
+      .first();
+
     const targetProfile = await ctx.db
       .query('userProfiles')
       .withIndex('by_user_id', (q) => q.eq('userId', args.targetUserId))
       .first();
 
-    if (!targetProfile) {
-      throw new Error('Usuario destino no encontrado');
+    if (!sourceProfile || !targetProfile) {
+      // Intentar crear perfiles si no existen
+      if (!sourceProfile) {
+        await ctx.db.insert('userProfiles', {
+          userId: args.sourceUserId,
+          role: 'USER',
+        });
+      }
+      if (!targetProfile) {
+        await ctx.db.insert('userProfiles', {
+          userId: args.targetUserId,
+          role: 'USER',
+        });
+      }
     }
 
-    if (targetProfile.role === 'ADMIN') {
+    // Verificar roles después de asegurarnos que existen los perfiles
+    const updatedSourceProfile =
+      sourceProfile ||
+      (await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user_id', (q) => q.eq('userId', args.sourceUserId))
+        .first());
+    const updatedTargetProfile =
+      targetProfile ||
+      (await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user_id', (q) => q.eq('userId', args.targetUserId))
+        .first());
+
+    if (!updatedSourceProfile || !updatedTargetProfile) {
+      throw new Error('Error al verificar los perfiles de usuario');
+    }
+
+    // No permitir clonar datos desde un admin
+    if (updatedSourceProfile.role === 'ADMIN') {
+      throw new Error('No se pueden clonar datos desde un usuario administrador');
+    }
+
+    // No permitir clonar datos hacia un admin
+    if (updatedTargetProfile.role === 'ADMIN') {
       throw new Error('No se pueden clonar datos a un usuario administrador');
     }
 
@@ -97,7 +154,7 @@ export const cloneUserData = mutation({
         .query('maintenanceRecords')
         .withIndex('by_vehicle_id', (q) => q.eq('vehicleId', vehicle._id))
         .collect();
-      
+
       for (const record of records) {
         await ctx.db.delete(record._id);
       }
@@ -107,7 +164,7 @@ export const cloneUserData = mutation({
         .query('scheduledMaintenance')
         .withIndex('by_vehicle_id', (q) => q.eq('vehicleId', vehicle._id))
         .collect();
-      
+
       for (const item of scheduled) {
         await ctx.db.delete(item._id);
       }

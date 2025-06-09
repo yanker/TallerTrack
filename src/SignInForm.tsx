@@ -19,13 +19,12 @@ export function SignInForm() {
       .then((content) => setGuideContent(content))
       .catch((error) => console.error('Error loading guide:', error));
   }, []);
-
   const validatePassword = (password: string) => {
     if (flow === 'signUp') {
-      if (password.length < 6) {
-        return 'La contraseña debe tener al menos 6 caracteres';
+      if (password.length < 8) {
+        return 'La contraseña debe tener al menos 8 caracteres';
       }
-      if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password)) {
+      if (!/^(?=.*[A-Za-z])(?=.*\d)/.test(password)) {
         return 'La contraseña debe contener al menos una letra y un número';
       }
     }
@@ -40,13 +39,13 @@ export function SignInForm() {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const password = formData.get('password') as string;
-          
+
           const error = validatePassword(password);
           if (error) {
             setPasswordError(error);
             return;
           }
-          
+
           setSubmitting(true);
           formData.set('flow', flow);
           void signIn('password', formData).catch((error) => {
@@ -63,23 +62,19 @@ export function SignInForm() {
       >
         <input className="auth-input-field" type="email" name="email" placeholder="Email" required />
         <div>
-          <input 
+          <input
             className={`auth-input-field w-full ${passwordError ? 'border-red-500' : ''}`}
-            type="password" 
-            name="password" 
-            placeholder="Contraseña" 
-            required 
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required
             onChange={(e) => {
               const error = validatePassword(e.target.value);
               setPasswordError(error);
             }}
           />
-          {passwordError && flow === 'signUp' && (
-            <p className="text-red-500 text-sm mt-1">{passwordError}</p>
-          )}
-          {flow === 'signUp' && !passwordError && (
-            <p className="text-gray-500 text-sm mt-1">Mínimo 6 caracteres, debe incluir letras y números</p>
-          )}
+          {passwordError && flow === 'signUp' && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+          {flow === 'signUp' && !passwordError && <p className="text-gray-500 text-sm mt-1">Mínimo 6 caracteres, debe incluir letras y números</p>}
         </div>
         <button
           className={`w-full px-4 py-3 rounded font-semibold text-white shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
@@ -102,11 +97,13 @@ export function SignInForm() {
             {flow === 'signIn' ? 'Regístrate' : 'Inicia sesión'}
           </button>
         </div>
-      </form>      <div className="mt-6 text-center flex flex-col gap-2">
+      </form>{' '}
+      <div className="mt-6 text-center flex flex-col gap-2">
         <div className="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
           <p className="text-sm text-gray-700 mb-2">¿Quieres probar la aplicación? Usa la cuenta demo:</p>
           <p className="text-sm font-mono bg-white p-2 rounded border">
-            Email: <span className="text-blue-600">demo@demo.com</span><br />
+            Email: <span className="text-blue-600">demo@demo.com</span>
+            <br />
             Contraseña: <span className="text-blue-600">123456789</span>
           </p>
         </div>
@@ -117,16 +114,10 @@ export function SignInForm() {
           <span>📖</span>
           ¿Cómo usar TallerTracker?
         </button>
-        <a
-          href="/guide"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
-        >
+        <a href="/guide" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:text-blue-800 hover:underline">
           Ver manual en nueva pestaña ↗️
         </a>
       </div>
-
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Manual de usuario - TallerTracker">
         <div className="prose prose-sm max-w-none">
           <HtmlContent markdown={guideContent} />
