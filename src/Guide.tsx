@@ -4,8 +4,7 @@ import { HtmlContent } from './components/HtmlContent';
 export function Guide() {
   const [guideContent, setGuideContent] = useState('');
 
-  useEffect(() => {
-    fetch('/public/USAGE_GUIDE.md')
+  useEffect(() => {    fetch('/USAGE_GUIDE.md')
       .then((response) => response.text())
       .then((content) => setGuideContent(content))
       .catch((error) => console.error('Error loading guide:', error));
