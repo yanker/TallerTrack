@@ -10,6 +10,7 @@ import { ScheduledMaintenance } from './components/ScheduledMaintenance';
 import { Users } from './components/Users';
 import { Dashboard } from './components/Dashboard';
 import { Notes } from './components/Notes';
+import { Guide } from './Guide';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -30,6 +31,12 @@ export default function App() {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
   }, []);
+  // Check if we're on the guide page
+  const isGuidePath = window.location.pathname === '/guide';
+  
+  if (isGuidePath) {
+    return <Guide />;
+  }
 
   if (user === undefined) {
     return (

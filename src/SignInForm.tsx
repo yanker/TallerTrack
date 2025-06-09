@@ -63,9 +63,7 @@ export function SignInForm() {
             {flow === 'signIn' ? 'Regístrate' : 'Inicia sesión'}
           </button>
         </div>
-      </form>
-
-      <div className="mt-6 text-center">
+      </form>      <div className="mt-6 text-center flex flex-col gap-2">
         <button
           onClick={() => setIsModalOpen(true)}
           className="text-sm text-gray-600 hover:text-gray-800 hover:underline flex items-center justify-center gap-2 mx-auto"
@@ -73,6 +71,14 @@ export function SignInForm() {
           <span>📖</span>
           ¿Cómo usar TallerTracker?
         </button>
+        <a
+          href="/guide"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+        >
+          Ver manual en nueva pestaña ↗️
+        </a>
       </div>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Manual de usuario - TallerTracker">
