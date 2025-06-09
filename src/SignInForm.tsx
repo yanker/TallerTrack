@@ -64,6 +64,13 @@ export function SignInForm() {
           </button>
         </div>
       </form>      <div className="mt-6 text-center flex flex-col gap-2">
+        <div className="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <p className="text-sm text-gray-700 mb-2">¿Quieres probar la aplicación? Usa la cuenta demo:</p>
+          <p className="text-sm font-mono bg-white p-2 rounded border">
+            Email: <span className="text-blue-600">demo@demo.com</span><br />
+            Contraseña: <span className="text-blue-600">123456789</span>
+          </p>
+        </div>
         <button
           onClick={() => setIsModalOpen(true)}
           className="text-sm text-gray-600 hover:text-gray-800 hover:underline flex items-center justify-center gap-2 mx-auto"

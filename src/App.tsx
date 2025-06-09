@@ -11,6 +11,7 @@ import { Users } from './components/Users';
 import { Dashboard } from './components/Dashboard';
 import { Notes } from './components/Notes';
 import { Guide } from './Guide';
+import { AdminTools } from './components/AdminTools';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -76,18 +77,17 @@ export default function App() {
           </header>
 
           {/* Main Content */}
-          <main className="p-4">
-            {activeTab === 'dashboard' && <Dashboard />}
+          <main className="p-4">            {activeTab === 'dashboard' && <Dashboard />}
             {activeTab === 'maintenance' && <MaintenanceRecords />}
             {activeTab === 'vehicles' && <Vehicles />}
             {activeTab === 'scheduled' && <ScheduledMaintenance />}
             {activeTab === 'users' && user?.role === 'ADMIN' && <Users />}
+            {activeTab === 'admin' && user?.role === 'ADMIN' && <AdminTools />}
             {activeTab === 'notes' && <Notes />}
           </main>
 
-          {/* Bottom Navigation */}
-          <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
-            <div className="grid grid-cols-5 md:grid-cols-6">
+          {/* Bottom Navigation */}          <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+            <div className={`grid ${user?.role === 'ADMIN' ? 'grid-cols-7' : 'grid-cols-5'}`}>
               <button
                 onClick={() => setActiveTab('dashboard')}
                 className={`p-3 text-center ${activeTab === 'dashboard' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'}`}
@@ -118,9 +118,8 @@ export default function App() {
               >
                 <div className="text-xl mb-1">📅</div>
                 <div className="text-xs">Programado</div>
-              </button>
-
-              {user?.role === 'ADMIN' && (
+              </button>              {user?.role === 'ADMIN' && (
+                <>
                 <button
                   onClick={() => setActiveTab('users')}
                   className={`p-3 text-center ${activeTab === 'users' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'}`}
@@ -128,6 +127,14 @@ export default function App() {
                   <div className="text-xl mb-1">👥</div>
                   <div className="text-xs">Usuarios</div>
                 </button>
+                <button
+                  onClick={() => setActiveTab('admin')}
+                  className={`p-3 text-center ${activeTab === 'admin' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'}`}
+                >
+                  <div className="text-xl mb-1">⚙️</div>
+                  <div className="text-xs">Admin</div>
+                </button>
+                </>
               )}
 
               <button
