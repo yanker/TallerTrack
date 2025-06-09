@@ -14,9 +14,9 @@ export function SignInForm() {
 
   useEffect(() => {
     fetch('/USAGE_GUIDE.md')
-      .then(response => response.text())
-      .then(content => setGuideContent(content))
-      .catch(error => console.error('Error loading guide:', error));
+      .then((response) => response.text())
+      .then((content) => setGuideContent(content))
+      .catch((error) => console.error('Error loading guide:', error));
   }, []);
 
   return (
@@ -75,11 +75,7 @@ export function SignInForm() {
         </button>
       </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Manual de usuario - TallerTracker"
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Manual de usuario - TallerTracker">
         <div className="prose prose-sm max-w-none">
           <HtmlContent markdown={guideContent} />
         </div>

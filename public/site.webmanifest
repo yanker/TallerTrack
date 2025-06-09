@@ -3,6 +3,8 @@
   "short_name": "TallerTracker",
   "start_url": "/",
   "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "/favicon-96x96.png",
