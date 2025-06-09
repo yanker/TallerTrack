@@ -48,7 +48,15 @@ TallerTracker es una aplicación web progresiva (PWA) diseñada para ayudar a us
    - Haz clic en "Iniciar sesión"
    - Serás redirigido automáticamente al Dashboard
 
-3. **Roles de usuario**:
+3. **Acceso DEMO**:
+
+   - Para probar la aplicación sin registrarte, puedes usar el acceso DEMO
+   - Email: demo@demo.com
+   - Contraseña: 123456789
+   - Este usuario tiene datos de ejemplo preconfigurados para explorar todas las funcionalidades
+   - **Nota**: Los cambios realizados en el usuario DEMO se restauran periódicamente
+
+4. **Roles de usuario**:
    - **Usuario estándar**: Puede gestionar sus propios vehículos y mantenimientos
    - **Administrador**: Además, puede gestionar todos los usuarios del sistema
 
