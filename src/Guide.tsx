@@ -5,38 +5,24 @@ export function Guide() {
   const [guideContent, setGuideContent] = useState('');
 
   useEffect(() => {
-    // Try multiple possible paths for the guide file
-    const paths: string[] = [
-      '/docs/USAGE_GUIDE.md',
-      '/USAGE_GUIDE.md',
-      '/public/docs/USAGE_GUIDE.md',
-      '/public/USAGE_GUIDE.md'
-    ];
-
-    const tryLoadGuide = async (attemptPaths: string[]): Promise<boolean> => {
-      for (const path of attemptPaths) {
-        try {
-          console.log(`Trying to load guide from: ${path}`);
-          const response = await fetch(path);
-          if (response.ok) {
-            const content = await response.text();
-            console.log(`Guide loaded successfully from ${path}`);
-            setGuideContent(content);
-            return true;
-          }
-        } catch (error) {
-          console.log(`Failed to load from ${path}:`, error);
+    const loadGuide = async () => {
+      try {
+        // Intentar cargar desde la raíz de public
+        console.log('Loading guide...');
+        const response = await fetch('/USAGE_GUIDE.md');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-      }
-      return false;
-    };
-
-    void tryLoadGuide(paths).then(success => {
-      if (!success) {
-        console.error('Failed to load guide from all paths');
+        const content = await response.text();
+        console.log('Guide loaded successfully');
+        setGuideContent(content);
+      } catch (error) {
+        console.error('Error loading guide:', error);
         setGuideContent('Error loading guide. Please try again later.');
       }
-    });
+    };
+
+    void loadGuide();
   }, []);
 
   return (
